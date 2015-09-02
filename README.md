@@ -2,9 +2,9 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki sovellukseeni](http://kkerokos.users.cs.helsinki.fi/kurssikysely/)
+* [Linkki dokumentaatiooni](https://github.com/KKatriina/Tsoha-Bootstrap/tree/master/doc)
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+[Kurssikysely](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Kurssikysely.html)
