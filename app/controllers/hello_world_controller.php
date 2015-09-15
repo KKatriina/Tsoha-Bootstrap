@@ -1,5 +1,6 @@
 <?php
 
+
   class HelloWorldController extends BaseController{
 
     public static function index(){
@@ -9,7 +10,13 @@
 
     public static function sandbox(){
       // Testaa koodiasi täällä
-      View::make('helloworld.html');
+      //View::make('helloworld.html');
+      $rajaarvot = Kurssi::find('Raja-arvot');
+      $kurssit = Kurssi::all();
+      
+      Kint::dump($kurssit);
+      Kint::dump($rajaarvot);
+      
     }
     
     public static function etusivu() {

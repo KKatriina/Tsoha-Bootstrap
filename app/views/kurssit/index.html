@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> Kurssit </h1>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää uusi kurssi</button>
+    </div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Kurssin nimi</th>
+            <th>Järjestävä laitos</th>           
+            <th>Vastuuopettaja</th>
+            <th>Kurssin tyyppi</th>
+            <th>Kurssiaika</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for kurssi in kurssit %}
+            <tr>
+                <td><a href="{{base_path}}/kurssi/{{kurssi.tunniste}}">{{kurssi.nimi}}</td>
+                <td>{{kurssi.laitos}}</td>
+                <td>{{kurssi.opettaja}}</td>
+                <td>{{kurssi.tyyppi}}</td>
+                <td>{{kurssi.aika}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+  
+  
+{% endblock %}

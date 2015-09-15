@@ -13,7 +13,7 @@
   });
   
   $routes->get('/kurssit', function() {
-  HelloWorldController::kurssit();
+  KurssiController::index();
   });
   
   $routes->get('/kyselyt', function() {
