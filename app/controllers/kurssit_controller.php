@@ -6,6 +6,15 @@ class KurssiController extends BaseController{
         $kurssit = Kurssi::all();
         View::make('kurssit/index.html', array('kurssit' => $kurssit));
     }
+    
+    public static function show($nimi) {
+        $nimi = Kurssi::find($nimi);
+        View::make('kurssit/:nimi.html');
+    }
+    
+    public static function uusi() {
+        View::make('/kurssit/new.html');
+    }
 }
 
 /* 

@@ -32,3 +32,10 @@
   HelloWorldController::tervetuloa();
   });
   
+  $routes->get('/kurssit/:nimi', function($nimi){
+      KurssiController::show($nimi); 
+  });
+  
+  $routes->get('/kurssit/new', function() {
+        KurssiController::uusi();
+    });
