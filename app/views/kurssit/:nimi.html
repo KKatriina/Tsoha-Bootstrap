@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1> Raja-arvot </h1>
+
+
+<h1> {{kurssi.nimi}} </h1>
 
   <p>
     <button class="btn btn-default">Poista</button> 
@@ -10,15 +12,15 @@
   </p>
   
     <ul>
-    <li><strong>Kurssin vastuuopettaja: </strong> Setämies </li>
-    <li><strong>Järjestävä laitos: </strong> Matematiikan ja tilastotieteen laitos </li>
-    <li><strong>Kurssin tyyppi: </strong> Perusopinnot </li>
-    <li><strong>Kurssiaika: </strong> I periodi </li>
+    <li><strong>Kurssin vastuuopettaja: </strong> {{kurssi.opettaja}} </li>
+    <li><strong>Järjestävä laitos: </strong> {{kurssi.laitos}} </li>
+    <li><strong>Kurssin tyyppi: </strong> {{kurssi.tyyppi}} </li>
+    <li><strong>Kurssiaika: </strong> {{kurssi.aika}} </li>
   </ul>
 
   <p>
       
-      Hämmennyksen kautta helpotukseen eli tähän tulee kurssin esittely.
+      {{kurssi.esittely}}
       
   </p>
   

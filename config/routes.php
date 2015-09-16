@@ -24,6 +24,7 @@
   HelloWorldController::muokkaa_kurssia();
   });
   
+  
   $routes->get('/kurssin_esittelysivu', function() {
   HelloWorldController::kurssin_esittelysivu();
   });
@@ -32,10 +33,19 @@
   HelloWorldController::tervetuloa();
   });
   
+  
+  
+  $routes->post('/kurssi', function(){
+      KurssiController::store();
+  });
+  
+  
+  $routes->get('/kurssit/new', function(){
+     KurssiController::uusi(); 
+  });
+  
   $routes->get('/kurssit/:nimi', function($nimi){
       KurssiController::show($nimi); 
   });
-  
-  $routes->get('/kurssit/new', function() {
-        KurssiController::uusi();
-    });
+
+

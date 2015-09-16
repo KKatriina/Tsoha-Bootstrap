@@ -8,12 +8,28 @@ class KurssiController extends BaseController{
     }
     
     public static function show($nimi) {
-        $nimi = Kurssi::find($nimi);
-        View::make('kurssit/:nimi.html');
+        $kurssi = Kurssi::find($nimi);
+        View::make('kurssit/:nimi.html', array('kurssi' => $kurssi));
     }
     
     public static function uusi() {
         View::make('/kurssit/new.html');
+    }
+    
+    public static function store() {
+        $params = $_POST;
+        $kurssi = new Kurssi(array(
+            'nimi' => $params['nimi'],
+            'opettaja' => $params['opettaja'],
+            'tyyppi' => $params['tyyppi'],
+            'aika' => $params['aika'],
+            'kuvaus' => $params['kuvaus']
+        ));
+        
+                
+        $kurssi->save();
+        
+        Redirect::to('/kurssit/index.html');
     }
 }
 

@@ -46,6 +46,27 @@ class Kurssi extends BaseModel{
             return $kurssi;
         }
     }
+    
+    public function save(){
+//        $tyyppiLukuna = 4;
+//        if ($this->tyyppi = 'Perusopinnot') {
+//            $tyyppiLukuna = 1;
+//        }
+//        if ($this->tyyppi = 'Aineopinnot') {
+//            $tyyppiLukuna = 2;
+//        }
+//        if ($this->tyyppi = 'Syventävät opinnot') {
+//            $tyyppiLukuna = 3;
+//        }
+        $query = DB::connection()->prepare('INSERT INTO KURSSI (nimi, aika, tyyppi, kuvaus, opettaja)
+                 VALUES (:nimi, :aika, :tyyppi, :kuvaus, :opettaja) RETURNING id');
+        
+        $query->execute(array('nimi' => $this->nimi, 'aika' => $this->aika,
+                'tyyppi' => 3, 'kuvaus' => $this->kuvaus, 'opettaja' => $this.opettaja));
+                
+        $row = $query->fetch();
+        $this->nimi = $row['nimi'];
+    }
 }
 
 /* 
