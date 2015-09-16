@@ -16,6 +16,7 @@ class KurssiController extends BaseController{
         View::make('/kurssit/new.html');
     }
     
+    //tää ei toimi. en tiä mikä on
     public static function store() {
         $params = $_POST;
         $kurssi = new Kurssi(array(
