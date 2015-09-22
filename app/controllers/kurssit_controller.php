@@ -7,9 +7,9 @@ class KurssiController extends BaseController{
         View::make('kurssit/index.html', array('kurssit' => $kurssit));
     }
     
-    public static function show($nimi) {
-        $kurssi = Kurssi::find($nimi);
-        View::make('kurssit/:nimi.html', array('kurssi' => $kurssi));
+    public static function show($tunniste) {
+        $kurssi = Kurssi::find($tunniste);
+        View::make('kurssit/tunniste.html', array('kurssi' => $kurssi));
     }
     
     public static function uusi() {
@@ -30,8 +30,43 @@ class KurssiController extends BaseController{
                 
         $kurssi->save();
         
-        Redirect::to('/kurssit/index.html');
+        Redirect::to('/kurssit');
     }
+    
+    public static function edit($tunniste) {
+        $kurssi = Kurssi::find($tunniste);
+        View::make('kurssi/edit.html', array('attributes' => $kurssi));
+    }
+    
+    public static function destroy($tunniste) {
+        $kurssi = Kurssi::find($tunniste);
+        View::make('kurssi/destroy.html', array('attributes' => $kurssi));
+    }
+    
+//    public static function update($tunniste) {
+//        $params = $_POST;
+//        
+//        $attributes = array(            
+//            'nimi' => $params['nimi'],
+//            'opettaja' => $params['opettaja'],
+//            'tyyppi' => $params['tyyppi'],
+//            'aika' => $params['aika'],
+//            'kuvaus' => $params['kuvaus']        
+//        );
+//        
+//        $kurssi = new Kurssi($attributes);
+//        $errors = $kurssi->errors();
+//        
+//        if(count($errors) > 0) {
+//            View::make('kurssit/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+//        } else {
+//            $kurssi->update();
+//            
+//            
+//            //mitä tän pitäis olla?????
+//            Redirect::to('/kurssi/');
+//        }
+//    }
 }
 
 /* 

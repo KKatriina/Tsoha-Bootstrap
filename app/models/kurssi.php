@@ -28,9 +28,9 @@ class Kurssi extends BaseModel{
         return $kurssit;
     }
     
-    public static function find($nimi){
-        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE nimi = :nimi LIMIT 1');
-        $query->execute(array('nimi' => $nimi));
+    public static function find($tunniste){
+        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE tunniste = :tunniste LIMIT 1');
+        $query->execute(array('tunniste' => $tunniste));
         $row = $query->fetch();
         
         if ($row){
@@ -48,25 +48,40 @@ class Kurssi extends BaseModel{
     }
     
     public function save(){
-//        $tyyppiLukuna = 4;
-//        if ($this->tyyppi = 'Perusopinnot') {
-//            $tyyppiLukuna = 1;
-//        }
-//        if ($this->tyyppi = 'Aineopinnot') {
-//            $tyyppiLukuna = 2;
-//        }
-//        if ($this->tyyppi = 'Syventävät opinnot') {
-//            $tyyppiLukuna = 3;
-//        }
+        $tyyppiLukuna = 4;
+        if ($this->tyyppi == 'Perusopinnot') {
+            $tyyppiLukuna = 1;
+        }
+        if ($this->tyyppi == 'Aineopinnot') {
+            $tyyppiLukuna = 2;
+        }
+        if ($this->tyyppi == 'Syventävät opinnot') {
+            $tyyppiLukuna = 3;
+        }
         $query = DB::connection()->prepare('INSERT INTO KURSSI (nimi, aika, tyyppi, kuvaus, opettaja)
-                 VALUES (:nimi, :aika, :tyyppi, :kuvaus, :opettaja) RETURNING id');
+                 VALUES (:nimi, :aika, :tyyppi, :kuvaus, :opettaja) RETURNING tunniste');
         
         $query->execute(array('nimi' => $this->nimi, 'aika' => $this->aika,
-                'tyyppi' => 3, 'kuvaus' => $this->kuvaus, 'opettaja' => $this.opettaja));
+                'tyyppi' => $tyyppiLukuna, 'kuvaus' => $this->kuvaus, 'opettaja' => $this->opettaja));
                 
         $row = $query->fetch();
-        $this->nimi = $row['nimi'];
+        $this->tunniste = $row['tunniste'];
     }
+    
+    public function validate_nimi() {
+        $errors = array();
+        if ($this->nimi == '' || $this->nimi == null) {
+            $errors[] = 'Syötä nimi-kenttään nimi';
+            
+        }
+        if (strlen($this->nimi) < 3) {
+            $errors[] = 'Nimen täytyy olla vähintään kolme merkkiä pitkä';
+        }
+        
+        return $errors;
+    }
+    
+
 }
 
 /* 

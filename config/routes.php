@@ -32,20 +32,30 @@
   $routes->get('/tervetuloa', function() {
   HelloWorldController::tervetuloa();
   });
+
+  $routes->get('/kurssit/new', function(){
+     KurssiController::uusi(); 
+  });
   
-  
+  $routes->get('/kurssit/:tunniste', function($tunniste){
+      KurssiController::show($tunniste); 
+  });
   
   $routes->post('/kurssi', function(){
       KurssiController::store();
   });
   
-  
-  $routes->get('/kurssit/new', function(){
-     KurssiController::uusi(); 
+  $routes->get('/kurssit/:tunniste/edit', function($tunniste){
+      KurssiController::edit($tunniste);
   });
   
-  $routes->get('/kurssit/:nimi', function($nimi){
-      KurssiController::show($nimi); 
+  $routes->post('kurssit/:tunniste/edit', function($tunniste){
+      KurssiController::update($tunniste);
   });
+  
+  $routes->post('/kurssit/:tunniste/destroy', function($tunniste){
+      KurssiController::destroy($tunniste);
+  });
+  
 
 

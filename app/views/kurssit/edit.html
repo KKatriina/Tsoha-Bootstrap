@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Muokkaa kurssia {{kurssi.nimi}} </h1>
+
+<form>
+    <div class="form-group">
+      <label>Kurssin nimi</label>
+      <input type="text" class="form-control" value= {{kurssi.nimi}} >
+    </div>
+    <div class="form-group">
+      <label>Kurssin vastuuopettaja</label>
+      <input type="text" class="form-control" value="Setämies">
+    </div>
+    <div class="form-group">
+      <label>Kurssin tyyppi</label>
+      <input type="text" class="form-control" value="Perusopinnot">
+    </div>
+    <div class="form-group">
+      <label>Kurssiaika</label>
+      <input type="text" class="form-control" value="I periodi">
+    </div>
+    <div class="form-group">
+      <label>Vapaa kuvaus</label>
+      <textarea class="form-control">Hämmennyksen kautta helpotukseen eli tähän tulee kurssin esittely. 
+      </textarea>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+  </form>
+
+
+  
+  
+{% endblock %}
