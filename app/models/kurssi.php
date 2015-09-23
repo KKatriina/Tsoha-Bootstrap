@@ -81,6 +81,36 @@ class Kurssi extends BaseModel{
         return $errors;
     }
     
+    public function update(){
+        $tyyppiLukuna = 4;
+        if ($this->tyyppi == 'Perusopinnot') {
+            $tyyppiLukuna = 1;
+        }
+        if ($this->tyyppi == 'Aineopinnot') {
+            $tyyppiLukuna = 2;
+        }
+        if ($this->tyyppi == 'Syventävät opinnot') {
+            $tyyppiLukuna = 3;
+        }
+        $query = DB::connection()->prepare('UPDATE KURSSI (nimi, aika, tyyppi, kuvaus, opettaja)
+                 VALUES (:nimi, :aika, :tyyppi, :kuvaus, :opettaja) RETURNING tunniste');
+        
+        $query->execute(array('nimi' => $this->nimi, 'aika' => $this->aika,
+                'tyyppi' => $tyyppiLukuna, 'kuvaus' => $this->kuvaus, 'opettaja' => $this->opettaja));
+                
+        $row = $query->fetch();
+        $this->tunniste = $row['tunniste'];
+    }
+    
+    public function destroy() {
+        $query = DB::connection()->prepare('DELETE FROM KURSSI WHERE tunniste = :tunniste');
+        $query->execute(array('tunniste' => $this->tunniste));
+        $row = $query->fetch();
+    }
+    
+    
+    
+    
 
 }
 

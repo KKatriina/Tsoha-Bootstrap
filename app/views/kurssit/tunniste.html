@@ -5,11 +5,15 @@
 
 <h1> {{kurssi.nimi}} </h1>
 
-  <p>
-    <button class="btn btn-default">Poista</button> 
-    <a href="#" class="btn btn-default">Muokkaa</a>
+  
+    <form method="post" action="{{base_path}}/kurssit/{{kurssi.tunniste}}/destroy" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Poista</button>
+    </form>
+    <form method="get" action="{{base_path}}/kurssit/{{kurssi.tunniste}}/edit" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Muokkaa</button>
+    </form>
     <a href="#" class="btn btn-default">Lisää kysely</a>
-  </p>
+  
   
     <ul>
     <li><strong>Kurssin vastuuopettaja: </strong> {{kurssi.opettaja}} </li>

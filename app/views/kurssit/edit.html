@@ -3,26 +3,26 @@
 
 <h1>Muokkaa kurssia {{kurssi.nimi}} </h1>
 
-<form>
+<form method='post' action="{{base_bath}}/kurssikysely/kurssit/{{kurssi.tunniste}}/update">
     <div class="form-group">
       <label>Kurssin nimi</label>
-      <input type="text" class="form-control" value= {{kurssi.nimi}} >
+      <input type="text" class="form-control" value= "" >
     </div>
     <div class="form-group">
       <label>Kurssin vastuuopettaja</label>
-      <input type="text" class="form-control" value="Setämies">
+      <input type="text" class="form-control" value="">
     </div>
     <div class="form-group">
       <label>Kurssin tyyppi</label>
-      <input type="text" class="form-control" value="Perusopinnot">
+      <input type="text" class="form-control" value= "">
     </div>
     <div class="form-group">
       <label>Kurssiaika</label>
-      <input type="text" class="form-control" value="I periodi">
+      <input type="text" class="form-control" value="">
     </div>
     <div class="form-group">
       <label>Vapaa kuvaus</label>
-      <textarea class="form-control">Hämmennyksen kautta helpotukseen eli tähän tulee kurssin esittely. 
+      <textarea class="form-control"> 
       </textarea>
     </div>
     <div class="form-group">

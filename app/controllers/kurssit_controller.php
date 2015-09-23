@@ -16,7 +16,7 @@ class KurssiController extends BaseController{
         View::make('/kurssit/new.html');
     }
     
-    //tää ei toimi. en tiä mikä on
+    
     public static function store() {
         $params = $_POST;
         $kurssi = new Kurssi(array(
@@ -35,38 +35,43 @@ class KurssiController extends BaseController{
     
     public static function edit($tunniste) {
         $kurssi = Kurssi::find($tunniste);
-        View::make('kurssi/edit.html', array('attributes' => $kurssi));
+        View::make('kurssit/edit.html', array('kurssi' => $kurssi));
     }
     
     public static function destroy($tunniste) {
-        $kurssi = Kurssi::find($tunniste);
-        View::make('kurssi/destroy.html', array('attributes' => $kurssi));
+        $kurssi = new Kurssi(array('tunniste' => $tunniste));
+        
+        $kurssi->destroy();
+        
+        Redirect::to('/kurssit');
     }
     
-//    public static function update($tunniste) {
-//        $params = $_POST;
-//        
-//        $attributes = array(            
-//            'nimi' => $params['nimi'],
-//            'opettaja' => $params['opettaja'],
-//            'tyyppi' => $params['tyyppi'],
-//            'aika' => $params['aika'],
-//            'kuvaus' => $params['kuvaus']        
-//        );
-//        
-//        $kurssi = new Kurssi($attributes);
-//        $errors = $kurssi->errors();
-//        
-//        if(count($errors) > 0) {
-//            View::make('kurssit/edit.html', array('errors' => $errors, 'attributes' => $attributes));
-//        } else {
-//            $kurssi->update();
-//            
-//            
-//            //mitä tän pitäis olla?????
-//            Redirect::to('/kurssi/');
-//        }
-//    }
+    public static function update($tunniste) {
+        $params = $_POST;
+        
+        $attributes = array(            
+            'nimi' => $params['nimi'],
+            'opettaja' => $params['opettaja'],
+            'tyyppi' => $params['tyyppi'],
+            'aika' => $params['aika'],
+            'kuvaus' => $params['kuvaus']        
+        );
+        
+        $kurssi = new Kurssi($attributes);
+        $errors = $kurssi->errors();
+        
+        if(count($errors) > 0) {
+            View::make('kurssit/edit.html', array('errors' => $errors, 'kurssi' => $attributes));
+        } else {
+            $kurssi->update();
+            
+            
+ 
+        Redirect::to('/kurssit/');
+        }
+    }
+    
+    
 }
 
 /* 

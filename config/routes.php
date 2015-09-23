@@ -39,6 +39,10 @@
   
   $routes->get('/kurssit/:tunniste', function($tunniste){
       KurssiController::show($tunniste); 
+  });  
+  
+  $routes->post('kurssit/:tunniste/update', function($tunniste){
+      KurssiController::update($tunniste);
   });
   
   $routes->post('/kurssi', function(){
@@ -49,12 +53,21 @@
       KurssiController::edit($tunniste);
   });
   
-  $routes->post('kurssit/:tunniste/edit', function($tunniste){
-      KurssiController::update($tunniste);
-  });
   
   $routes->post('/kurssit/:tunniste/destroy', function($tunniste){
       KurssiController::destroy($tunniste);
+  });
+  
+  $routes->get('/login', function() {
+      UserController::login();
+  });
+  
+  $routes->post('/login', function() {
+      UserController::handle_login();
+  });
+  
+  $routes->get('/user/tervetuloa', function() {
+        UserController::tervetuloa();
   });
   
 
