@@ -9,6 +9,8 @@ Yleisiä linkkejä:
 * [Linkki kurssien muokkaussivulle](http://kkerokos.users.cs.helsinki.fi/kurssikysely/muokkaa_kurssia)
 * [Linkki tervetulosivulle](http://kkerokos.users.cs.helsinki.fi/kurssikysely/tervetuloa)
 * [Linkki dokumentaatiooni](https://github.com/KKatriina/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
+ 
+Kirjautua voi nimellä Assari, salasana abc789
 
 ## Työn aihe
 
