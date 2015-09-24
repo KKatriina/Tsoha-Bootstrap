@@ -1,20 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1> Tervetuloa, Setämies! </h1>
+<h1> Tervetuloa, {{user_logged_in.nimi}}! </h1>
 
 <p>Mitä haluaisit seuraavaksi tehdä?</p>
 
-<form>
+<form method='get' action="{{base_path}}/kyselyt">
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Selaa kyselyjä</button>
     </div>
-    <div class="form-group">
+    
+</form>
+
+<form method='get' action= "{{base_path}}/kurssit">
+        <div class="form-group">
       <button type="submit" class="btn btn-primary">Selaa kursseja</button>
     </div>
+</form>
+
+<form method = 'get' action="{{base_path}}/kyselyt/new">
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Lisää uusi kysely</button>
     </div>
+</form>
+
+<form method='get' action="{{base_path}}/kurssit/new">
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Lisää uusi kurssi</button>
     </div>

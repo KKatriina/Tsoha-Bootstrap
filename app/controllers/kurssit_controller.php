@@ -27,15 +27,24 @@ class KurssiController extends BaseController{
             'kuvaus' => $params['kuvaus']
         ));
         
-                
-        $kurssi->save();
+        $errors = $kurssi->errors();
         
-        Redirect::to('/kurssit');
+        if(count($errors) == 0) {
+            $kurssi->save();
+            Redirect::to('/kurssit');
+        } else {
+            View::make('kurssit/new.html', array('errors' => $errors, 'attributes => $attributes'));
+        }
+        
+                
+        
+        
+        
     }
     
     public static function edit($tunniste) {
         $kurssi = Kurssi::find($tunniste);
-        View::make('kurssit/edit.html', array('kurssi' => $kurssi));
+        View::make('/kurssit/edit.html', array('kurssi' => $kurssi));
     }
     
     public static function destroy($tunniste) {

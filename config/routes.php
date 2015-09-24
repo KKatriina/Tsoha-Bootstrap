@@ -1,7 +1,7 @@
 <?php
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+      UserController::login();
   });
 
   $routes->get('/hiekkalaatikko', function() {
@@ -9,15 +9,23 @@
   });
   
   $routes->get('/etusivu', function() {
-  HelloWorldController::etusivu();
+      UserController::login();
   });
   
   $routes->get('/kurssit', function() {
   KurssiController::index();
   });
   
+  $routes->get('/kyselyt/new', function() {
+  KyselyController::uusi();
+  });
+  
   $routes->get('/kyselyt', function() {
-  HelloWorldController::kyselyt();
+  KyselyController::index();
+  });
+  
+  $routes->post('/kyselyt/uusi', function() {
+      KyselyController::save();
   });
   
   $routes->get('/muokkaa_kurssia', function() {
@@ -30,7 +38,7 @@
   });
   
   $routes->get('/tervetuloa', function() {
-  HelloWorldController::tervetuloa();
+    UserController::tervetulosivu();
   });
 
   $routes->get('/kurssit/new', function(){
@@ -41,7 +49,7 @@
       KurssiController::show($tunniste); 
   });  
   
-  $routes->post('kurssit/:tunniste/update', function($tunniste){
+  $routes->post('kurssit/:tunniste/edit', function($tunniste){
       KurssiController::update($tunniste);
   });
   

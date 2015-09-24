@@ -5,6 +5,7 @@ class Kurssi extends BaseModel{
     
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_nimi', 'validate_aika', 'validate_tyyppi', 'validate_opettaja');
         
     }
     
@@ -79,6 +80,38 @@ class Kurssi extends BaseModel{
         }
         
         return $errors;
+    }
+    
+    public function validate_aika() {
+        $errors = array();
+        if ($this->aika == '' || $this->aika == null) {
+            $errors[] = 'Syötä aika-kenttään ajankohta, jolloin kurssi pidetään';
+            
+        }
+        
+        return $errors;
+    }
+    
+    public function validate_opettaja() {
+        $errors = array();
+        if ($this->opettaja == '' || $this->opettaja == null) {
+            $errors[] = 'Syötä opettaja-kenttään opettajan nimi';
+            
+        }
+        if (strlen($this->opettaja) < 3) {
+            $errors[] = 'Opettajan nimen täytyy olla vähintään kolme merkkiä pitkä';
+        }
+        
+        return $errors;
+    }
+    
+    public function validate_tyyppi() {
+        $errors = array();
+        if ($this->tyyppi != 'Perusopinnot' && $this->tyyppi != 'Aineopinnot'
+                && $this->tyyppi != 'Syventävät opinnot' && $this->tyyppi != 'Muut opinnot') {
+            $errors[] = 'Kurssin tyypin täytyy olla jokin seuraavista: Perusopinnot, Aineopinnot, Syventävät opinnot tai Muut opinnot';
+        }
+         return $errors;
     }
     
     public function update(){

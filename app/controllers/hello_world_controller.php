@@ -11,12 +11,16 @@
     public static function sandbox(){
       // Testaa koodiasi täällä
       //View::make('helloworld.html');
-      $rajaarvot = Kurssi::find('Raja-arvot');
-      $kurssit = Kurssi::all();
+      $uusiKurssi = new Kurssi(array(
+          'nimi' => '1',
+          'aika' => 'III periodi',
+          'tyyppi' => 'agf',
+          'kuvaus' => 'Metriikkaa',
+          'opettaja' => ''
+      ));
+      $errors = $uusiKurssi->errors();
       
-      Kint::dump($kurssit);
-      Kint::dump($rajaarvot);
-      
+      Kint::dump($errors);
     }
     
     public static function etusivu() {
