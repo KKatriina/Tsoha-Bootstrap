@@ -38,4 +38,13 @@ class KyselyController extends BaseController{
         Redirect::to('/kyselyt');
     
     }
+    
+    public static function kurssin_kyselyt($tunniste) {
+        $kurssi = Kurssi::find($tunniste);
+        $kyselyt = Kysely::kurssin_kyselyt($tunniste);
+        if(count($kyselyt) == 0) {
+            View::make('/user/tervetuloa.html');
+        }
+        View::make('/kurssit/kurssin_kyselyt.html', array('kyselyt' => $kyselyt, 'kurssi' => $kurssi));
+    }
 }

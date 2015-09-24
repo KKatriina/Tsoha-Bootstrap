@@ -15,7 +15,40 @@ class Kysely extends BaseModel{
                     and kurssin_kysely.kysely = kysely.nimi');
         $query->execute();
         $rows = $query->fetchAll();
-        $kurssit = array();
+        $kyselyt = array();
+        
+        if (count($rows) == 0) {
+            return $kyselyt;
+        }
+        
+        foreach($rows as $row){
+            $kyselyt[] = new Kysely(array(
+               'tunniste' => $row['tunniste'],
+               'kurssi' => $row['nimi'],
+               'aika' => $row['aika'],
+               'kyselyn_nimi' => $row['kysely'],
+               'paattyminen' => $row['paattyminen'],
+               'tarkoitus' => $row['tarkoitus']
+            ));
+        }
+        
+        return $kyselyt;
+    }
+    
+     public function kurssin_kyselyt($kurssitunniste) {
+        $query = DB::connection()->prepare('SELECT kurssin_kysely.tunniste, kurssi.nimi, kurssi.aika, kurssin_kysely.kysely, paattyminen, tarkoitus
+                 FROM kurssi, kurssin_kysely, kysely
+                 WHERE kurssi.tunniste=kurssin_kysely.kurssi
+                    and kurssin_kysely.kysely = kysely.nimi
+                    and kurssi.tunniste = :kurssitunniste');
+        $query->execute(array('kurssitunniste' => $kurssitunniste));
+        $rows = $query->fetchAll();
+        
+                $kyselyt = array();
+        
+        if (count($rows) == 0) {
+            return $kyselyt;
+        }
         
         foreach($rows as $row){
             $kyselyt[] = new Kysely(array(

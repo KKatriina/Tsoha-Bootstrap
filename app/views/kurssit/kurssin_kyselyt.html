@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> Kurssin {{kurssi.nimi}} kyselyt </h1>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Kyselyn nimi</th>
+            <th>Kurssi</th>           
+            <th>Kurssiaika</th>
+            <th>Kyselyn tarkoitus</th>
+            <th>Kyselyn päättymispäivä</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for kysely in kyselyt %}
+            <tr>
+                <td><a href="{{base_path}}/kyselyt/{{kysely.tunniste}}">{{kysely.kyselyn_nimi}}</td>
+                <td>{{kysely.kurssi}}</td>
+                <td>{{kysely.aika}}</td>
+                <td>{{kysely.tarkoitus}}</td>
+                <td>{{kysely.paattyminen}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+  
+  
+{% endblock %}

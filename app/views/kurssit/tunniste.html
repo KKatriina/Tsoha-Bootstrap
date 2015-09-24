@@ -28,8 +28,10 @@
       {{kurssi.esittely}}
       
   </p>
-  
-  <button type="submit" class="btn btn-primary">Selaa kurssin kyselyitä</button>
+
+      <form method="get" action="{{base_path}}/kurssit/{{kurssi.tunniste}}/kyselyt" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Näytä kurssin kyselyt</button>
+    </form>
   
   
 {% endblock %}

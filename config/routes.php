@@ -80,6 +80,10 @@
       KurssiController::destroy($tunniste);
   });
   
+  $routes->get('/kurssit/:tunniste/kyselyt', function($tunniste) {
+  KyselyController::kurssin_kyselyt($tunniste);
+  });
+  
   $routes->get('/login', function() {
       UserController::login();
   });
