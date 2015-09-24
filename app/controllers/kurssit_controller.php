@@ -7,6 +7,11 @@ class KurssiController extends BaseController{
         View::make('kurssit/index.html', array('kurssit' => $kurssit));
     }
     
+    public static function omat_kurssit($nimi) {
+        $kurssit = Kurssi::all_your_own($nimi);
+        View::make('kurssit/index.html', array('kurssit' => $kurssit));
+    }
+    
     public static function show($tunniste) {
         $kurssi = Kurssi::find($tunniste);
         View::make('kurssit/tunniste.html', array('kurssi' => $kurssi));

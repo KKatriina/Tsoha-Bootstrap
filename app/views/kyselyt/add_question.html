@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Lisää kysymys kyselyyn {{kysely.nimi}}</h1>
+
+    <form method="get" action="{{base_path}}/kyselyt" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Ei kiitos, kyselyni on valmis!</button>
+    </form>
+
+<form method='post' action="{{base_bath}}/kurssikysely/kyselyt/{{kysely.tunniste}}/lisaa_kysymys">
+    <div class="form-group">
+      <label>Kysymys</label>
+      <input type="text" name = "kurssi" class="form-control">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+
+
+  
+  
+{% endblock %}

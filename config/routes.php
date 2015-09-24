@@ -3,6 +3,8 @@
   $routes->get('/', function() {
       UserController::login();
   });
+  
+
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
@@ -28,6 +30,14 @@
       KyselyController::save();
   });
   
+  $routes->get('/kyselyt/:tunniste', function($tunniste) {
+      KyselyController::show($tunniste);
+  });
+  
+  $routes->get('/kyselyt/:tunniste/lisaa_kysymys', function($tunniste) {
+  KyselyController::add_question($tunniste);
+  });
+  
   $routes->get('/muokkaa_kurssia', function() {
   HelloWorldController::muokkaa_kurssia();
   });
@@ -45,13 +55,13 @@
      KurssiController::uusi(); 
   });
   
+
+  
   $routes->get('/kurssit/:tunniste', function($tunniste){
       KurssiController::show($tunniste); 
   });  
   
-  $routes->post('kurssit/:tunniste/edit', function($tunniste){
-      KurssiController::update($tunniste);
-  });
+
   
   $routes->post('/kurssi', function(){
       KurssiController::store();
@@ -59,6 +69,10 @@
   
   $routes->get('/kurssit/:tunniste/edit', function($tunniste){
       KurssiController::edit($tunniste);
+  });
+  
+    $routes->post('/kurssit/:tunniste/edit', function($tunniste){
+      KurssiController::update($tunniste);
   });
   
   
@@ -77,6 +91,14 @@
   $routes->get('/user/tervetuloa', function() {
         UserController::tervetuloa();
   });
+  
+    $routes->get('/:nimi/omat_kurssit', function($nimi) {
+  KurssiController::omat_kurssit($nimi);
+  });
+  
+
+  
+
   
 
 

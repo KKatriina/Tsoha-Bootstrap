@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<h1> {{kysely.kyselyn_nimi}} </h1>
+
+  
+    <form>
+        <button type="submit" class="btn btn-danger">Poista</button>
+    </form>
+    <form>
+        <button type="submit" class="btn btn-danger">Muokkaa</button>
+    </form>
+    <form method="get" action="{{base_path}}/kyselyt/{{kysely.tunniste}}/lisaa_kysymys" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Lisää kysymys</button>
+    </form>
+
+
+    <ul>
+    <li><strong>Kurssin nimi: </strong> {{kysely.kurssi}} </li>
+    <li><strong>Kurssin aika: </strong> {{kysely.aika}} </li>
+    <li><strong>Kyselyn nimi: </strong> {{kysely.kyselyn_nimi}} </li>
+    <li><strong>Kyselyn päättymispäivä: </strong> {{kysely.paattyminen}} </li>
+    <li><strong>Kyselyn tarkoitus: </strong> {{kysely.tarkoitus}} </li>
+  </ul>
+
+<h2> Kyselyn kysymykset </h2>
+  
+{% endblock %}

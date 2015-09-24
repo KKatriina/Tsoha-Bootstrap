@@ -29,6 +29,27 @@ class Kurssi extends BaseModel{
         return $kurssit;
     }
     
+    public static function all_your_own($nimi){
+ 
+        $query = DB::connection()->prepare('SELECT * FROM kurssi where opettaja = :opettaja');
+        $query->execute(array('opettaja' => $nimi));
+        $rows = $query->fetchAll();
+        $kurssit = array();
+        
+        foreach($rows as $row){
+            $kurssit[] = new Kurssi(array(
+               'tunniste' => $row['tunniste'],
+               'nimi' => $row['nimi'],
+               'aika' => $row['aika'],
+               'tyyppi' => $row['tyyppi'],
+               'kuvaus' => $row['kuvaus'],
+               'opettaja' => $row['opettaja']
+            ));
+        }
+        
+        return $kurssit;
+    }
+    
     public static function find($tunniste){
         $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE tunniste = :tunniste LIMIT 1');
         $query->execute(array('tunniste' => $tunniste));

@@ -8,20 +8,22 @@
         <tr>
             <th>Kyselyn nimi</th>
             <th>Kurssi</th>           
-            <th>Vastuuopettaja</th>
             <th>Kurssiaika</th>
+            <th>Kyselyn tarkoitus</th>
             <th>Kyselyn päättymispäivä</th>
         </tr>
     </thead>
     
     <tbody>
-        <tr>
-            <td><a href="#">Loppukysely</a></td>
-            <td>Raja-arvot</td>
-            <td>Setämies</td>
-            <td>I periodi</td>
-            <td>30.10.2015</td>
-        </tr>
+        {% for kysely in kyselyt %}
+            <tr>
+                <td><a href="{{base_path}}/kyselyt/{{kysely.tunniste}}">{{kysely.kyselyn_nimi}}</td>
+                <td>{{kysely.kurssi}}</td>
+                <td>{{kysely.aika}}</td>
+                <td>{{kysely.tarkoitus}}</td>
+                <td>{{kysely.paattyminen}}</td>
+            </tr>
+        {% endfor %}
     </tbody>
     
 </table>

@@ -12,9 +12,10 @@
     <form method="get" action="{{base_path}}/kurssit/{{kurssi.tunniste}}/edit" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Muokkaa</button>
     </form>
-    <a href="#" class="btn btn-default">Lisää kysely</a>
-  
-  
+    <form method="get" action="{{base_path}}/kyselyt/new" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Lisää kysely</button>
+    </form>
+
     <ul>
     <li><strong>Kurssin vastuuopettaja: </strong> {{kurssi.opettaja}} </li>
     <li><strong>Järjestävä laitos: </strong> {{kurssi.laitos}} </li>

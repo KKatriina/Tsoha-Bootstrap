@@ -2,15 +2,26 @@
 
 class KyselyController extends BaseController{
     public static function index() {
-//        $kyselyt = Kysely::keraa_tiedot();
-//        View::make('kyselyt/index.html', array('kyselyt' => $kyselyt));
-        View::make('/kyselyt/index.html');
+        $kyselyt = Kysely::keraa_tiedot();
+        View::make('kyselyt/index.html', array('kyselyt' => $kyselyt));
+//        View::make('/kyselyt/index.html');
     }
     
     public static function uusi() {
         View::make('/kyselyt/new.html');
     }
     
+    public static function show($tunniste) {
+        $kysely = Kysely::find($tunniste);
+        View::make('kyselyt/tunniste.html', array('kysely' => $kysely));
+    }
+    
+    public static function add_question($tunniste) {
+        $kysely = Kysely::find($tunniste);
+        View::make('kyselyt/add_question.html', array('kysely' => $kysely));
+    }
+
+
     public static function save() {
         $params = $_POST;
         $kysely = new Kysely(array(

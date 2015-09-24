@@ -9,7 +9,51 @@ class Kysely extends BaseModel{
     }
     
     public function keraa_tiedot() {
+        $query = DB::connection()->prepare('SELECT kurssin_kysely.tunniste, kurssi.nimi, kurssi.aika, kurssin_kysely.kysely, paattyminen, tarkoitus
+                 FROM kurssi, kurssin_kysely, kysely
+                 WHERE kurssi.tunniste=kurssin_kysely.kurssi
+                    and kurssin_kysely.kysely = kysely.nimi');
+        $query->execute();
+        $rows = $query->fetchAll();
+        $kurssit = array();
         
+        foreach($rows as $row){
+            $kyselyt[] = new Kysely(array(
+               'tunniste' => $row['tunniste'],
+               'kurssi' => $row['nimi'],
+               'aika' => $row['aika'],
+               'kyselyn_nimi' => $row['kysely'],
+               'paattyminen' => $row['paattyminen'],
+               'tarkoitus' => $row['tarkoitus']
+            ));
+        }
+        
+        return $kyselyt;
+    }
+    
+    public function find($tunniste) {
+        
+            $query = DB::connection()->prepare('SELECT kurssin_kysely.tunniste, kurssi.nimi, kurssi.aika, kurssin_kysely.kysely, paattyminen, tarkoitus
+                 FROM kurssi, kurssin_kysely, kysely
+                 WHERE kurssi.tunniste=kurssin_kysely.kurssi
+                    and kurssin_kysely.kysely = kysely.nimi
+                    and kurssin_kysely.tunniste = :tunniste LIMIT 1');
+        $query->execute(array('tunniste' => $tunniste));
+        $row = $query->fetch();
+ 
+        
+        if($row){
+            $kysely = new Kysely(array(
+               'tunniste' => $tunniste,
+               'kurssi' => $row['nimi'],
+               'aika' => $row['aika'],
+               'kyselyn_nimi' => $row['kysely'],
+               'paattyminen' => $row['paattyminen'],
+               'tarkoitus' => $row['tarkoitus']
+            ));
+        }
+        
+        return $kysely;
     }
     
     public function save() {
@@ -20,6 +64,9 @@ class Kysely extends BaseModel{
         $kurssin_tunniste = $row['tunniste'];
         
 
+        //tehdään lisäys taulukkoon kysely
+        $query = DB::connection()->prepare('INSERT INTO KYSELY (nimi, tarkoitus) VALUES (:nimi, :tarkoitus)');
+        $query->execute(array('nimi' => $this->kyselyn_nimi, 'tarkoitus' => 'testi'));
         
         
         //tehdään lisäys liitostauluun
@@ -27,9 +74,6 @@ class Kysely extends BaseModel{
                  VALUES (:kurssi, :kysely, :paattyminen)');
         $query->execute(array('kurssi' => $kurssin_tunniste, 'kysely' => $this->kyselyn_nimi, 'paattyminen' => $this->paattyminen));
               
-        //tehdään lisäys taulukkoon kysely
-        $query = DB::connection()->prepare('INSERT INTO KYSELY (nimi, tarkoitus) VALUES (:nimi, :tarkoitus)');
-        $query->execute(array('nimi' => $this->kyselyn_nimi, 'tarkoitus' => $this->tarkoitus));
-        
+
     }
 }
