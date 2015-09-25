@@ -26,7 +26,7 @@
   KyselyController::index();
   });
   
-  $routes->post('/kyselyt/uusi', function($tunniste) {
+  $routes->post('/kyselyt/uusi', function() {
       KyselyController::save();
   });
   

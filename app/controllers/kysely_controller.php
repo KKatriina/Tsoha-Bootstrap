@@ -35,7 +35,7 @@ class KyselyController extends BaseController{
     }
 
 
-    public static function save($tunniste) {
+    public static function save() {
         self::check_logged_in();
         $params = $_POST;
         $kysely = new Kysely(array(
@@ -89,7 +89,7 @@ class KyselyController extends BaseController{
     public static function destroy($tunniste) {
         $kysely = new Kysely(array('tunniste' => $tunniste));
         
-        $game->destroy();
+        $kysely->destroy();
         
         Redirect::to('/kyselyt', array('message' => 'Kysely on poistettu onnistuneesti!'));
     }

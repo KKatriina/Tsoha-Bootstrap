@@ -89,7 +89,13 @@ class Kysely extends BaseModel{
         return $kysely;
     }
     
-    public function save($kurssin_tunniste) {
+    public function save() {
+        //haetaan oikea kurssi
+        $query = DB::connection()->prepare('SELECT tunniste FROM KURSSI WHERE nimi = :nimi and aika = :aika LIMIT 1');
+        $query->execute(array('nimi' => $this->kurssi, 'aika' => $this->aika));
+        $params2 = $query->fetch();
+        $kurssin_tunniste = $params2['tunniste'];
+        
         
         //tehdään lisäys taulukkoon kysely
         $query = DB::connection()->prepare('INSERT INTO KYSELY (nimi, tarkoitus) VALUES (:nimi, :tarkoitus)');
@@ -128,11 +134,11 @@ class Kysely extends BaseModel{
         return $kysymykset;
     }
     
-    public static function update($tunniste) {
+    public function update($tunniste) {
         
     }
     
-    public static function destroy($tunniste) {               
+    public function destroy() {               
         $query = DB::connection()->prepare('DELETE FROM Kurssin_kysely WHERE tunniste = :tunniste');
         $query->execute(array('tunniste' => $this->tunniste));
         $row = $query->fetch();
