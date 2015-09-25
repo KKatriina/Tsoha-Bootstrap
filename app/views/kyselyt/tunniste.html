@@ -26,5 +26,11 @@
   </ul>
 
 <h2> Kyselyn kysymykset </h2>
+
+<ul>
+{% for kysymys in kysymykset %}
+<li> {{kysymys}} </li>
+{% endfor %}
+</ul>
   
 {% endblock %}

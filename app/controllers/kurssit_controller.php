@@ -3,26 +3,31 @@
 class KurssiController extends BaseController{
     
     public static function index(){
+        self::check_logged_in();
         $kurssit = Kurssi::all();
         View::make('kurssit/index.html', array('kurssit' => $kurssit));
     }
     
     public static function omat_kurssit($nimi) {
+        self::check_logged_in();
         $kurssit = Kurssi::all_your_own($nimi);
         View::make('kurssit/index.html', array('kurssit' => $kurssit));
     }
     
     public static function show($tunniste) {
+        self::check_logged_in();
         $kurssi = Kurssi::find($tunniste);
         View::make('kurssit/tunniste.html', array('kurssi' => $kurssi));
     }
     
     public static function uusi() {
+        self::check_logged_in();
         View::make('/kurssit/new.html');
     }
     
     
     public static function store() {
+        self::check_logged_in();
         $params = $_POST;
         $kurssi = new Kurssi(array(
             'nimi' => $params['nimi'],
@@ -48,11 +53,13 @@ class KurssiController extends BaseController{
     }
     
     public static function edit($tunniste) {
+        self::check_logged_in();
         $kurssi = Kurssi::find($tunniste);
         View::make('/kurssit/edit.html', array('kurssi' => $kurssi));
     }
     
     public static function destroy($tunniste) {
+        self::check_logged_in();
         $kurssi = new Kurssi(array('tunniste' => $tunniste));
         
         $kurssi->destroy();
@@ -61,6 +68,7 @@ class KurssiController extends BaseController{
     }
     
     public static function update($tunniste) {
+        self::check_logged_in();
         $params = $_POST;
         
         $attributes = array(            
@@ -77,11 +85,11 @@ class KurssiController extends BaseController{
         if(count($errors) > 0) {
             View::make('kurssit/edit.html', array('errors' => $errors, 'kurssi' => $attributes));
         } else {
-            $kurssi->update();
+            $kurssi->update($tunniste);
             
             
  
-        Redirect::to('/kurssit/');
+            Redirect::to('/kurssit');
         }
     }
     

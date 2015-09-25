@@ -26,7 +26,7 @@
   KyselyController::index();
   });
   
-  $routes->post('/kyselyt/uusi', function() {
+  $routes->post('/kyselyt/uusi', function($tunniste) {
       KyselyController::save();
   });
   
@@ -36,6 +36,10 @@
   
   $routes->get('/kyselyt/:tunniste/lisaa_kysymys', function($tunniste) {
   KyselyController::add_question($tunniste);
+  });
+  
+  $routes->post('/kyselyt/:tunniste/uusi_kysymys', function ($tunniste) {
+  KyselyController::new_question($tunniste);
   });
   
   $routes->get('/muokkaa_kurssia', function() {
@@ -90,6 +94,10 @@
   
   $routes->post('/login', function() {
       UserController::handle_login();
+  });
+  
+  $routes->post('/logout', function() {
+  UserController::logout();
   });
   
   $routes->get('/user/tervetuloa', function() {

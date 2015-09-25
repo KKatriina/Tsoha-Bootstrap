@@ -11,13 +11,18 @@ class UserController extends BaseController{
     $user = User::authenticate($params['nimi'], $params['salasana']);
 
     if(!$user){
-      View::make('user/login.html');
+      View::make('user/login.html', array('message' => "Väärä käyttäjätunnus tai salasana!"));
     }else{
       $_SESSION['user'] = $user->nimi;
-      self::get_user_logged_in();
+//      self::get_user_logged_in();
 
       Redirect::to('/user/tervetuloa');
     }
+  }
+  
+  public static function logout(){
+      $_SESSION['user'] = null;
+      Redirect::to('/login', array('message' => 'Olet kirjautunut ulos!'));
   }
   
   public static function tervetuloa() {

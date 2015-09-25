@@ -135,7 +135,8 @@ class Kurssi extends BaseModel{
          return $errors;
     }
     
-    public function update(){
+    public function update($tunniste){
+        
         $tyyppiLukuna = 4;
         if ($this->tyyppi == 'Perusopinnot') {
             $tyyppiLukuna = 1;
@@ -146,11 +147,13 @@ class Kurssi extends BaseModel{
         if ($this->tyyppi == 'Syventävät opinnot') {
             $tyyppiLukuna = 3;
         }
-        $query = DB::connection()->prepare('UPDATE KURSSI (nimi, aika, tyyppi, kuvaus, opettaja)
-                 VALUES (:nimi, :aika, :tyyppi, :kuvaus, :opettaja) RETURNING tunniste');
+        $query = DB::connection()->prepare('UPDATE KURSSI SET nimi = :nimi, aika = :aika,
+                 tyyppi = :tyyppi, kuvaus = :kuvaus, opettaja = :opettaja
+                 WHERE tunniste = :tunniste
+                 RETURNING tunniste');
         
         $query->execute(array('nimi' => $this->nimi, 'aika' => $this->aika,
-                'tyyppi' => $tyyppiLukuna, 'kuvaus' => $this->kuvaus, 'opettaja' => $this->opettaja));
+                'tyyppi' => $tyyppiLukuna, 'kuvaus' => $this->kuvaus, 'opettaja' => $this->opettaja, 'tunniste' => $tunniste));
                 
         $row = $query->fetch();
         $this->tunniste = $row['tunniste'];

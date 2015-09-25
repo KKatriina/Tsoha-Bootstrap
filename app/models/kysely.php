@@ -89,14 +89,8 @@ class Kysely extends BaseModel{
         return $kysely;
     }
     
-    public function save() {
-        //etsitään kurssin nimen ja ajan perusteella oikea kurssi
-        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE nimi = :nimi and aika = :aika LIMIT 1');
-        $query->execute(array('nimi' => $this->kurssi, 'aika' => $this->aika));
-        $row = $query->fetch();
-        $kurssin_tunniste = $row['tunniste'];
+    public function save($kurssin_tunniste) {
         
-
         //tehdään lisäys taulukkoon kysely
         $query = DB::connection()->prepare('INSERT INTO KYSELY (nimi, tarkoitus) VALUES (:nimi, :tarkoitus)');
         $query->execute(array('nimi' => $this->kyselyn_nimi, 'tarkoitus' => 'testi'));
@@ -108,5 +102,33 @@ class Kysely extends BaseModel{
         $query->execute(array('kurssi' => $kurssin_tunniste, 'kysely' => $this->kyselyn_nimi, 'paattyminen' => $this->paattyminen));
               
 
+    }
+    
+    public function add_question($kysymys, $kysely) {
+
+        $query = DB::connection()->prepare('INSERT INTO KYSYMYS (kysely, kysymys) values (:kysely, :kysymys)');
+        $query->execute(array('kysely' => $kysely->kyselyn_nimi, 'kysymys' => $kysymys));
+    }
+    
+    public function questions($kysely) {
+        $query = DB::connection()->prepare('SELECT KYSYMYS FROM KYSYMYS WHERE kysely = :kyselyn_nimi');
+        $query->execute(array('kyselyn_nimi' => $kysely->kyselyn_nimi));
+        $rows = $query->fetchAll();
+        
+        $kysymykset = array();
+        
+        if (count($rows) == 0) {
+            return $kysymykset;
+        }
+        
+        foreach($rows as $row){
+            $kysymykset[] = $row['kysymys'];
+        }
+        
+        return $kysymykset;
+    }
+    
+    public static function edit($tunniste) {
+        
     }
 }
