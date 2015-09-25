@@ -64,7 +64,7 @@ class KurssiController extends BaseController{
         
         $kurssi->destroy();
         
-        Redirect::to('/kurssit');
+        Redirect::to('/kurssit', array('message' => 'Kurssi on poistettu onnistuneesti!'));
     }
     
     public static function update($tunniste) {
@@ -89,7 +89,7 @@ class KurssiController extends BaseController{
             
             
  
-            Redirect::to('/kurssit');
+            Redirect::to('/kurssit', array('message' => 'Kurssia on muokattu onnistuneesti!'));
         }
     }
     

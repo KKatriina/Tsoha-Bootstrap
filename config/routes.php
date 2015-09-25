@@ -104,9 +104,23 @@
         UserController::tervetuloa();
   });
   
+  $routes->get('/kyselyt/:tunniste/edit', function($tunniste){
+  KyselyController::edit($tunniste);
+  });
+  
+  $routes->post('/kyselyt/:tunniste/edit', function($tunniste){
+  KyselyController::update($tunniste);
+  });
+  
+  $routes->post('/kyselyt/:tunniste/destroy', function($tunniste){
+  KyselyController::destroy($tunniste);
+  });
+  
     $routes->get('/:nimi/omat_kurssit', function($nimi) {
   KurssiController::omat_kurssit($nimi);
   });
+  
+  
   
 
   

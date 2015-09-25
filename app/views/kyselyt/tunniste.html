@@ -6,7 +6,7 @@
 <h1> {{kysely.kyselyn_nimi}} </h1>
 
   
-    <form>
+    <form method ="post" action="{{base_path}}/kyselyt/{{kysely.tunniste}}/destroy" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Poista</button>
     </form>
     <form>

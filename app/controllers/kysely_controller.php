@@ -62,4 +62,35 @@ class KyselyController extends BaseController{
         }
         View::make('/kurssit/kurssin_kyselyt.html', array('kyselyt' => $kyselyt, 'kurssi' => $kurssi));
     }
+    
+    public static function edit($tunniste){
+        $kysely = Kysely::find($tunniste);
+        View::make('kyselyt/edit.html', array('kysely' => $kysely));
+    }
+    
+    public static function update($tunniste) {
+        $params = $_POST;
+        $attributes = array(
+            'tunniste' => $tunniste,
+            'kurssi' => $params['kurssi'],
+            'aika' => $params['aika'],
+            'kyselyn_nimi' => $params['kyselyn_nimi'],
+            'paattyminen' => $params['paattyminen'],
+            'tarkoitus' => $params['tarkoitus']
+        );
+        
+        $kysely = new Kysely($attributes);
+        
+        $kysely->update();
+        
+        Redirect::to('/kyselyt', array('message' => 'Kyselyä on muokattu onnistuneesti!'));
+    }
+    
+    public static function destroy($tunniste) {
+        $kysely = new Kysely(array('tunniste' => $tunniste));
+        
+        $game->destroy();
+        
+        Redirect::to('/kyselyt', array('message' => 'Kysely on poistettu onnistuneesti!'));
+    }
 }

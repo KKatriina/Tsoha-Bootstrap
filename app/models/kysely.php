@@ -128,7 +128,14 @@ class Kysely extends BaseModel{
         return $kysymykset;
     }
     
-    public static function edit($tunniste) {
+    public static function update($tunniste) {
+        
+    }
+    
+    public static function destroy($tunniste) {               
+        $query = DB::connection()->prepare('DELETE FROM Kurssin_kysely WHERE tunniste = :tunniste');
+        $query->execute(array('tunniste' => $this->tunniste));
+        $row = $query->fetch();
         
     }
 }
