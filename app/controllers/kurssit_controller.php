@@ -41,14 +41,13 @@ class KurssiController extends BaseController{
         
         if(count($errors) == 0) {
             $kurssi->save();
-            Redirect::to('/kurssit');
+            Redirect::to('/kurssit', array('message' => 'Kurssi lisätty onnistuneesti!'));
         } else {
-            View::make('kurssit/new.html', array('errors' => $errors, 'attributes => $attributes'));
+            View::make('kurssit/new.html', array('errors' => $errors, 'kurssi' => $kurssi));
         }
         
                 
-        
-        
+               
         
     }
     
@@ -71,7 +70,8 @@ class KurssiController extends BaseController{
         self::check_logged_in();
         $params = $_POST;
         
-        $attributes = array(            
+        $attributes = array(
+            'tunniste' => $tunniste,
             'nimi' => $params['nimi'],
             'opettaja' => $params['opettaja'],
             'tyyppi' => $params['tyyppi'],
@@ -83,7 +83,7 @@ class KurssiController extends BaseController{
         $errors = $kurssi->errors();
         
         if(count($errors) > 0) {
-            View::make('kurssit/edit.html', array('errors' => $errors, 'kurssi' => $attributes));
+            View::make('kurssit/edit.html', array('errors' => $errors, 'kurssi' => $kurssi));
         } else {
             $kurssi->update($tunniste);
             

@@ -59,7 +59,7 @@ class KyselyController extends BaseController{
             $kysely->save();
             Redirect::to('/kyselyt', array('message' => 'Kysely lisätty onnistuneesti!'));
         } else {
-            View::make('kyselyt/new.html', array('errors' => $errors, 'attributes => $attributes'));
+            View::make('kyselyt/new.html', array('errors' => $errors, 'kysely' => $kysely));
         }
         
 
@@ -97,7 +97,7 @@ class KyselyController extends BaseController{
         $errors = $kysely->errors();
         
         if(count($errors) > 0) {
-            View::make('kysely/edit.html', array('errors' => $errors, 'kysely' => $attributes));
+            View::make('kysely/edit.html', array('errors' => $errors, 'kysely' => $kysely));
         } else {
             $kysely->update($tunniste);    
  
@@ -117,13 +117,18 @@ class KyselyController extends BaseController{
     public static function taydenna() {
         self::check_logged_in();
         $params = $_POST;
-        $kysely = $params['kysely'];
-        $tarkoitus = $params['tarkoitus'];
-        Redirect::to('/kyselyt/taydenna', array('kysely' => $kysely, 'tarkoitus' => $tarkoitus));
+        $attributes = array(
+            'kyselyn_nimi' => $params['kyselyn_nimi'],
+            'tarkoitus' => $params['tarkoitus']
+        );
+        
+        $kysely = new Kysely($attributes);
+        Redirect::to('/kyselyt/taydenna', array('kysely' => $kysely));
     }
     
     public static function nayta_taydennyslomake() {
         self::check_logged_in();
+        
         View::make('kyselyt/taydenna.html');
     }
     
@@ -144,7 +149,7 @@ class KyselyController extends BaseController{
             $kysely->liita_kurssiin();
             Redirect::to('/kyselyt', array('message' => 'Kysely lisätty onnistuneesti!'));
         } else {
-            View::make('kyselyt/new.html', array('errors' => $errors, 'attributes => $attributes'));
+            View::make('kyselyt/taydenna.html', array('errors' => $errors, 'kysely' => $kysely));
         }
     }
 }

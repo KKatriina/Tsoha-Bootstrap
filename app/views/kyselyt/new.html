@@ -16,23 +16,23 @@
 <form method='post' action="{{base_bath}}/kurssikysely/kyselyt/uusi">
     <div class="form-group">
       <label>Kurssin nimi</label>
-      <input type="text" name = "kurssi" class="form-control">
+      <input type="text" name = "kurssi" class="form-control" value = "{{kysely.kurssi}}">
     </div>
     <div class="form-group">
         <label>Kurssin aika</label>
-        <input type="text" name = "aika" class="form-control">
+        <input type="text" name = "aika" class="form-control" value = "{{kysely.aika}}">
     </div>
     <div class="form-group">
       <label>Kyselyn nimi</label>
-      <input type="text" name="kyselyn_nimi" class="form-control">
+      <input type="text" name="kyselyn_nimi" class="form-control" value = "{{kysely.kyselyn_nimi}}">
     </div>
     <div class="form-group">
       <label>Kyselyn päättymispäivä</label>
-      <input type="text" name="paattyminen" class="form-control">
+      <input type="text" name="paattyminen" class="form-control" value = "{{kysely.paattyminen}}">
     </div>
     <div class="form-group">
       <label>Kyselyn tarkoitus</label>
-      <input type="text" name="tarkoitus" class="form-control">
+      <input type="text" name="tarkoitus" class="form-control" value = "{{kysely.tarkoitus}}">
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Lisää</button>
