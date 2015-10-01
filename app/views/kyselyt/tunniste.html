@@ -9,7 +9,7 @@
     <form method ="post" action="{{base_path}}/kyselyt/{{kysely.tunniste}}/destroy" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Poista</button>
     </form>
-    <form>
+    <form method = "get" action ="{{base_path}}/kyselyt/{{kysely.tunniste}}/edit" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Muokkaa</button>
     </form>
     <form method="get" action="{{base_path}}/kyselyt/{{kysely.tunniste}}/lisaa_kysymys" style="display: inline-block;">

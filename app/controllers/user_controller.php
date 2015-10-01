@@ -26,6 +26,7 @@ class UserController extends BaseController{
   }
   
   public static function tervetuloa() {
+      self::check_logged_in();
       View::make('/user/tervetuloa.html');
   }
 }

@@ -12,13 +12,13 @@
     <form method="get" action="{{base_path}}/kurssit/{{kurssi.tunniste}}/edit" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Muokkaa</button>
     </form>
-    <form method="get" action="{{base_path}}/kyselyt/new" style="display: inline-block;">
+    <form method="get" action="{{base_path}}/kyselyt/lisaysvaihtoehdot" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Lisää kysely</button>
     </form>
 
     <ul>
     <li><strong>Kurssin vastuuopettaja: </strong> {{kurssi.opettaja}} </li>
-    <li><strong>Järjestävä laitos: </strong> {{kurssi.laitos}} </li>
+ 
     <li><strong>Kurssin tyyppi: </strong> {{kurssi.tyyppi}} </li>
     <li><strong>Kurssiaika: </strong> {{kurssi.aika}} </li>
   </ul>

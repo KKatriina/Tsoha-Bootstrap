@@ -22,12 +22,28 @@
   KyselyController::uusi();
   });
   
+  $routes->get('/kyselyt/lisaysvaihtoehdot', function() {
+  KyselyController::lisaysvaihtoehdot();
+  });
+  
   $routes->get('/kyselyt', function() {
   KyselyController::index();
   });
   
   $routes->post('/kyselyt/uusi', function() {
-      KyselyController::save();
+      KyselyController::store();
+  });
+  
+  $routes->post('/kyselyt/taydenna', function() {
+  KyselyController::taydenna();
+  });
+  
+  $routes->get('/kyselyt/taydenna', function() {
+  KyselyController::nayta_taydennyslomake();
+  });
+  
+  $routes->post('/kyselyt/taydennetty', function() {
+  KyselyController::liita_kysely_kurssiin();
   });
   
   $routes->get('/kyselyt/:tunniste', function($tunniste) {
@@ -59,7 +75,6 @@
      KurssiController::uusi(); 
   });
   
-
   
   $routes->get('/kurssit/:tunniste', function($tunniste){
       KurssiController::show($tunniste); 

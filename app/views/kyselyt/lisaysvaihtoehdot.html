@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Lisäysvaihtoehdot</h1>
+
+
+Voit joko luoda kokonaan uuden kyselyn kurssillesi tai käyttää valmista kyselypohjaa.
+
+
+
+
+<form method="get" action="{{base_path}}/kyselyt/new" style="display: inline-block;">
+    <button type="submit" class="btn btn-danger">Luo uusi kysely</button>
+</form>
+
+
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Kysely</th>          
+            <th>Kyselyn tarkoitus</th>
+            <th>Kysymykset</th>
+            <th>Valitse kysely</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for kysely in kyselyt %}
+            <tr>
+                <td>{{kysely.kyselyn_nimi}}</td>
+                <td>{{kysely.tarkoitus}}</td>
+                <td>
+                    
+                {% for kysymys in kysely.kysymykset %}
+                    <li>{{kysymys}}</li>
+                {% endfor %}
+                    </td>
+                <td>
+                     <form method="post" action="{{base_path}}/kyselyt/taydenna" style="display: inline-block;">
+                         <input type="text" name = "kysely" class="form-control" value = "{{kysely.kyselyn_nimi}}">
+                         <input type="text" name = "tarkoitus" class="form-control" value = "{{kysely.tarkoitus}}">
+                    <button type="submit" class="btn btn-danger">Valitse</button>
+                    </form>   
+                    </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> Muokkaa kyselyä </h1>
+
+<div class="alert alert-success">
+  {{message}}
+</div>
+
+<form method='post' action="{{base_bath}}/kurssikysely/kyselyt/{{kysely.tunniste}}/edit">
+    <div class="form-group">
+      <label>Kyselyn päättymispäivä</label>
+      <input type="text" name="paattyminen" class="form-control" value = "{{kysely.paattyminen}}">
+    </div>
+    <div class="form-group">
+      <label>Kyselyn tarkoitus</label>
+      <input type="text" name="tarkoitus" class="form-control" value = "{{kysely.tarkoitus}}">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Muokkaa</button>
+    </div>
+  </form>
+
+
+  
+  
+{% endblock %}

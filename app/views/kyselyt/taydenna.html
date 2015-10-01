@@ -1,19 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Lisää uusi kysely</h1>
+<h1>Liitä kysely {{kysely}} kurssiin</h1>
 
-  {% if errors %}
-    <div class="alert alert-danger">
-      <ul>
-        {% for error in errors %}
-          <li>{{error}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
-
-<form method='post' action="{{base_bath}}/kurssikysely/kyselyt/uusi">
+<form method='post' action="{{base_bath}}/kurssikysely/kyselyt/taydennetty">
     <div class="form-group">
       <label>Kurssin nimi</label>
       <input type="text" name = "kurssi" class="form-control">
@@ -21,25 +11,22 @@
     <div class="form-group">
         <label>Kurssin aika</label>
         <input type="text" name = "aika" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Kyselyn nimi</label>
-      <input type="text" name="kyselyn_nimi" class="form-control">
-    </div>
+    </div>    
     <div class="form-group">
       <label>Kyselyn päättymispäivä</label>
       <input type="text" name="paattyminen" class="form-control">
     </div>
     <div class="form-group">
+      <label>Kyselyn nimi</label>
+      <input type="text" name="kyselyn_nimi"  class="form-control"value = "{{kysely}}">
+    </div>
+    <div class="form-group">
       <label>Kyselyn tarkoitus</label>
-      <input type="text" name="tarkoitus" class="form-control">
+      <input type="text" name="tarkoitus"  class="form-control"value = "{{tarkoitus}}">
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Lisää</button>
     </div>
   </form>
 
-
-  
-  
 {% endblock %}

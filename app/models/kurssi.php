@@ -115,13 +115,11 @@ class Kurssi extends BaseModel{
     
     public function validate_opettaja() {
         $errors = array();
-        if ($this->opettaja == '' || $this->opettaja == null) {
-            $errors[] = 'Syötä opettaja-kenttään opettajan nimi';
-            
+        if ($this->opettaja != 'Setämies' && $this->opettaja != 'Minä'
+                && $this->opettaja != 'Assari') {
+            $errors[] = 'Kurssin opettajan täytyy olla jokin järjestelmän käyttäjistä. Käyttäjiä tällä hetkellä: Setämies, Minä, Assari';
         }
-        if (strlen($this->opettaja) < 3) {
-            $errors[] = 'Opettajan nimen täytyy olla vähintään kolme merkkiä pitkä';
-        }
+        
         
         return $errors;
     }

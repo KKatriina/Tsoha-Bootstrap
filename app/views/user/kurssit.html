@@ -13,7 +13,6 @@
     <thead>
         <tr>
             <th>Kurssin nimi</th>
-            <th>Järjestävä laitos</th>           
             <th>Vastuuopettaja</th>
             <th>Kurssin tyyppi</th>
             <th>Kurssiaika</th>
@@ -24,7 +23,6 @@
         {% for kurssi in kurssit where opettaja = {{user_logged_in.nimi}} %}
             <tr>
                 <td><a href="{{base_path}}/kurssit/{{kurssi.tunniste}}">{{kurssi.nimi}}</td>
-                <td>{{kurssi.laitos}}</td>
                 <td>{{kurssi.opettaja}}</td>
                 <td>{{kurssi.tyyppi}}</td>
                 <td>{{kurssi.aika}}</td>
