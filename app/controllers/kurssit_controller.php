@@ -10,14 +10,14 @@ class KurssiController extends BaseController{
     
     public static function omat_kurssit($nimi) {
         self::check_logged_in();
-        $kurssit = Kurssi::all_your_own($nimi);
+        $kurssit = Kurssi::omat_kurssit($nimi);
         View::make('kurssit/index.html', array('kurssit' => $kurssit));
     }
     
     public static function show($tunniste) {
         self::check_logged_in();
         $kurssi = Kurssi::find($tunniste);
-        View::make('kurssit/tunniste.html', array('kurssi' => $kurssi));
+        View::make('kurssit/show.html', array('kurssi' => $kurssi));
     }
     
     public static function uusi() {

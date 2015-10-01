@@ -29,8 +29,7 @@ class Kurssi extends BaseModel{
         return $kurssit;
     }
     
-    public static function all_your_own($nimi){
- 
+    public static function omat_kurssit($nimi){
         $query = DB::connection()->prepare('SELECT * FROM kurssi where opettaja = :opettaja');
         $query->execute(array('opettaja' => $nimi));
         $rows = $query->fetchAll();
@@ -130,11 +129,10 @@ class Kurssi extends BaseModel{
                 && $this->tyyppi != 'Syventävät opinnot' && $this->tyyppi != 'Muut opinnot') {
             $errors[] = 'Kurssin tyypin täytyy olla jokin seuraavista: Perusopinnot, Aineopinnot, Syventävät opinnot tai Muut opinnot';
         }
-         return $errors;
+        return $errors;
     }
     
-    public function update($tunniste){
-        
+    public function update($tunniste){       
         $tyyppiLukuna = 4;
         if ($this->tyyppi == 'Perusopinnot') {
             $tyyppiLukuna = 1;

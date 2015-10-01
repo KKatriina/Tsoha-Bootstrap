@@ -15,7 +15,7 @@ class KyselyController extends BaseController{
     public static function show($tunniste) {
         $kysely = Kysely::find($tunniste);
         $kysymykset = Kysely::questions($kysely);
-        View::make('kyselyt/tunniste.html', array('kysely' => $kysely, 'kysymykset' => $kysymykset));
+        View::make('kyselyt/show.html', array('kysely' => $kysely, 'kysymykset' => $kysymykset));
     }
     
     public static function lisaysvaihtoehdot() {
@@ -24,13 +24,13 @@ class KyselyController extends BaseController{
         View::make('kyselyt/lisaysvaihtoehdot.html', array('kyselyt' => $kyselyt));
     }
     
-    public static function add_question($tunniste) {
+    public static function lisaa_kysymys($tunniste) {
         self::check_logged_in();
         $kysely = Kysely::find($tunniste);
-        View::make('kyselyt/add_question.html', array('kysely' => $kysely));
+        View::make('kyselyt/lisaa_kysymys.html', array('kysely' => $kysely));
     }
     
-    public static function new_question($tunniste) {
+    public static function new_kysymys($tunniste) {
         self::check_logged_in();
         $params = $_POST;
         $itse_kysymys = $params['kysymys'];
@@ -61,9 +61,7 @@ class KyselyController extends BaseController{
         } else {
             View::make('kyselyt/new.html', array('errors' => $errors, 'kysely' => $kysely));
         }
-        
-
-    
+           
     }
     
     public static function kurssin_kyselyt($tunniste) {
@@ -93,16 +91,9 @@ class KyselyController extends BaseController{
         
         $kysely = new Kysely($attributes);
 
-        
-        $errors = $kysely->errors();
-        
-        if(count($errors) > 0) {
-            View::make('kysely/edit.html', array('errors' => $errors, 'kysely' => $kysely));
-        } else {
-            $kysely->update($tunniste);    
+        $kysely->update($tunniste);    
  
-            Redirect::to('/kyselyt', array('message' => 'Kyselyä on muokattu onnistuneesti!')); 
-        }       
+        Redirect::to('/kyselyt', array('message' => 'Kyselyä on muokattu onnistuneesti!'));  
     }
     
     public static function destroy($tunniste) {
@@ -143,7 +134,9 @@ class KyselyController extends BaseController{
             'tarkoitus' => $params['tarkoitus']
         ));
         
-        $errors = $kysely->validate_kurssi_ja_aika();
+        $errors1 = $kysely->validate_kurssi_ja_aika();
+        $errors2 = $kysely->validate_paattyminen();
+        $errors = array_merge($errors1, $errors2);
         
         if(count($errors) == 0) {
             $kysely->liita_kurssiin();

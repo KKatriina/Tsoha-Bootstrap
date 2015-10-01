@@ -36,8 +36,8 @@ class Kysely extends BaseModel{
     }
     
     public function keraa_tiedot_lisayslomakkeeseen() {
-        $query = DB::connection()->prepare('SELECT nimi, tarkoitus
-         FROM kysely');
+        $query = DB::connection()->prepare('SELECT DISTINCT nimi, tarkoitus
+         FROM kysely, kysymys where nimi = kysely');
         $query->execute();
         $rows = $query->fetchAll();
         $kyselyt = array();
@@ -60,14 +60,14 @@ class Kysely extends BaseModel{
     
     public function kurssin_kyselyt($kurssitunniste) {
         $query = DB::connection()->prepare('SELECT kurssin_kysely.tunniste, kurssi.nimi, kurssi.aika, kurssin_kysely.kysely, paattyminen, tarkoitus
-                 FROM kurssi, kurssin_kysely, kysely
-                 WHERE kurssi.tunniste=kurssin_kysely.kurssi
-                    and kurssin_kysely.kysely = kysely.nimi
-                    and kurssi.tunniste = :kurssitunniste');
+                FROM kurssi, kurssin_kysely, kysely
+                WHERE kurssi.tunniste=kurssin_kysely.kurssi
+                and kurssin_kysely.kysely = kysely.nimi
+                and kurssi.tunniste = :kurssitunniste');
         $query->execute(array('kurssitunniste' => $kurssitunniste));
         $rows = $query->fetchAll();
         
-                $kyselyt = array();
+        $kyselyt = array();
         
         if (count($rows) == 0) {
             return $kyselyt;
@@ -89,13 +89,12 @@ class Kysely extends BaseModel{
     
     public function find($tunniste) { 
         $query = DB::connection()->prepare('SELECT kurssin_kysely.tunniste, kurssi.nimi, kurssi.aika, kurssin_kysely.kysely, paattyminen, tarkoitus
-                 FROM kurssi, kurssin_kysely, kysely
-                 WHERE kurssi.tunniste=kurssin_kysely.kurssi
-                    and kurssin_kysely.kysely = kysely.nimi
-                    and kurssin_kysely.tunniste = :tunniste LIMIT 1');
+                FROM kurssi, kurssin_kysely, kysely
+                WHERE kurssi.tunniste=kurssin_kysely.kurssi
+                and kurssin_kysely.kysely = kysely.nimi
+                and kurssin_kysely.tunniste = :tunniste LIMIT 1');
         $query->execute(array('tunniste' => $tunniste));
-        $row = $query->fetch();
- 
+        $row = $query->fetch(); 
         
         if($row){
             $kysely = new Kysely(array(
@@ -112,23 +111,20 @@ class Kysely extends BaseModel{
     }
     
     public function save() {
-        //haetaan oikea kurssi
+        //haetaan kurssin tunniste liitostaulua varten
         $query = DB::connection()->prepare('SELECT tunniste FROM KURSSI WHERE nimi = :nimi and aika = :aika LIMIT 1');
         $query->execute(array('nimi' => $this->kurssi, 'aika' => $this->aika));
         $params2 = $query->fetch();
         $kurssin_tunniste = $params2['tunniste'];
-        
-        
+                
         //tehdään lisäys taulukkoon kysely
         $query = DB::connection()->prepare('INSERT INTO KYSELY (nimi, tarkoitus) VALUES (:nimi, :tarkoitus)');
         $query->execute(array('nimi' => $this->kyselyn_nimi, 'tarkoitus' => $this->tarkoitus));
-        
-        
+                
         //tehdään lisäys liitostauluun
         $query = DB::connection()->prepare('INSERT INTO KURSSIN_KYSELY (kurssi, kysely, paattyminen)
                  VALUES (:kurssi, :kysely, :paattyminen)');
-        $query->execute(array('kurssi' => $kurssin_tunniste, 'kysely' => $this->kyselyn_nimi, 'paattyminen' => $this->paattyminen));
-              
+        $query->execute(array('kurssi' => $kurssin_tunniste, 'kysely' => $this->kyselyn_nimi, 'paattyminen' => $this->paattyminen));              
     }
     
     public function validate_kurssi_ja_aika() {
@@ -147,7 +143,6 @@ class Kysely extends BaseModel{
         }
         
         return $errors;
-    
     }
     
     public function validate_paattyminen() {
@@ -234,6 +229,5 @@ class Kysely extends BaseModel{
         $query = DB::connection()->prepare('INSERT INTO KURSSIN_KYSELY (kurssi, kysely, paattyminen)
                  VALUES (:kurssi, :kysely, :paattyminen)');
         $query->execute(array('kurssi' => $kurssin_tunniste, 'kysely' => $this->kyselyn_nimi, 'paattyminen' => $this->paattyminen));
-        
     }
 }

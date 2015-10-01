@@ -1,21 +1,37 @@
 <?php
 
+  //yleisiä reittejä
+
+//  $routes->get('/muokkaa_kurssia', function() {
+//  HelloWorldController::muokkaa_kurssia();
+//  });
+//  
+//  
+//  $routes->get('/kurssin_esittelysivu', function() {
+//  HelloWorldController::kurssin_esittelysivu();
+//  });
+
   $routes->get('/', function() {
-      UserController::login();
+  UserController::login();
   });
   
-
-
   $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
+  HelloWorldController::sandbox();
   });
   
   $routes->get('/etusivu', function() {
-      UserController::login();
+  UserController::login();
   });
   
-  $routes->get('/kurssit', function() {
-  KurssiController::index();
+  $routes->get('/tervetuloa', function() {
+  UserController::tervetulosivu();
+  });
+  
+  
+  //kyselyihin liittyviä reittejä
+  
+  $routes->get('/kyselyt', function() {
+  KyselyController::index();
   });
   
   $routes->get('/kyselyt/new', function() {
@@ -26,12 +42,8 @@
   KyselyController::lisaysvaihtoehdot();
   });
   
-  $routes->get('/kyselyt', function() {
-  KyselyController::index();
-  });
-  
   $routes->post('/kyselyt/uusi', function() {
-      KyselyController::store();
+  KyselyController::store();
   });
   
   $routes->post('/kyselyt/taydenna', function() {
@@ -47,77 +59,16 @@
   });
   
   $routes->get('/kyselyt/:tunniste', function($tunniste) {
-      KyselyController::show($tunniste);
+  KyselyController::show($tunniste);
   });
   
   $routes->get('/kyselyt/:tunniste/lisaa_kysymys', function($tunniste) {
-  KyselyController::add_question($tunniste);
+  KyselyController::lisaa_kysymys($tunniste);
   });
   
   $routes->post('/kyselyt/:tunniste/uusi_kysymys', function ($tunniste) {
-  KyselyController::new_question($tunniste);
-  });
-  
-  $routes->get('/muokkaa_kurssia', function() {
-  HelloWorldController::muokkaa_kurssia();
-  });
-  
-  
-  $routes->get('/kurssin_esittelysivu', function() {
-  HelloWorldController::kurssin_esittelysivu();
-  });
-  
-  $routes->get('/tervetuloa', function() {
-    UserController::tervetulosivu();
-  });
-
-  $routes->get('/kurssit/new', function(){
-     KurssiController::uusi(); 
-  });
-  
-  
-  $routes->get('/kurssit/:tunniste', function($tunniste){
-      KurssiController::show($tunniste); 
-  });  
-  
-
-  
-  $routes->post('/kurssi', function(){
-      KurssiController::store();
-  });
-  
-  $routes->get('/kurssit/:tunniste/edit', function($tunniste){
-      KurssiController::edit($tunniste);
-  });
-  
-    $routes->post('/kurssit/:tunniste/edit', function($tunniste){
-      KurssiController::update($tunniste);
-  });
-  
-  
-  $routes->post('/kurssit/:tunniste/destroy', function($tunniste){
-      KurssiController::destroy($tunniste);
-  });
-  
-  $routes->get('/kurssit/:tunniste/kyselyt', function($tunniste) {
-  KyselyController::kurssin_kyselyt($tunniste);
-  });
-  
-  $routes->get('/login', function() {
-      UserController::login();
-  });
-  
-  $routes->post('/login', function() {
-      UserController::handle_login();
-  });
-  
-  $routes->post('/logout', function() {
-  UserController::logout();
-  });
-  
-  $routes->get('/user/tervetuloa', function() {
-        UserController::tervetuloa();
-  });
+  KyselyController::new_kysymys($tunniste);
+  }); 
   
   $routes->get('/kyselyt/:tunniste/edit', function($tunniste){
   KyselyController::edit($tunniste);
@@ -131,7 +82,63 @@
   KyselyController::destroy($tunniste);
   });
   
-    $routes->get('/:nimi/omat_kurssit', function($nimi) {
+  //kursseihin liittyviä reittejä
+  
+  $routes->get('/kurssit', function() {
+  KurssiController::index();
+  });
+
+  $routes->get('/kurssit/new', function(){
+     KurssiController::uusi(); 
+  });
+  
+  
+  $routes->get('/kurssit/:tunniste', function($tunniste){
+      KurssiController::show($tunniste); 
+  });  
+  
+  
+  $routes->post('/kurssi', function(){
+  KurssiController::store();
+  });
+  
+  $routes->get('/kurssit/:tunniste/edit', function($tunniste){
+  KurssiController::edit($tunniste);
+  });
+  
+  $routes->post('/kurssit/:tunniste/edit', function($tunniste){
+  KurssiController::update($tunniste);
+  });
+  
+  
+  $routes->post('/kurssit/:tunniste/destroy', function($tunniste){
+  KurssiController::destroy($tunniste);
+  });
+  
+  $routes->get('/kurssit/:tunniste/kyselyt', function($tunniste) {
+  KyselyController::kurssin_kyselyt($tunniste);
+  });
+  
+  //käyttäjään liittyviä reittejä
+  
+  $routes->get('/login', function() {
+  UserController::login();
+  });
+  
+  $routes->post('/login', function() {
+  UserController::handle_login();
+  });
+  
+  $routes->post('/logout', function() {
+  UserController::logout();
+  });
+  
+  $routes->get('/user/tervetuloa', function() {
+  UserController::tervetuloa();
+  });
+  
+  
+  $routes->get('/:nimi/omat_kurssit', function($nimi) {
   KurssiController::omat_kurssit($nimi);
   });
   
