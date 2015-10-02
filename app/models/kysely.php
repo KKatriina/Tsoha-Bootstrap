@@ -147,6 +147,13 @@ class Kysely extends BaseModel{
     
     public function validate_paattyminen() {
         $errors = array();
+        $pieces = explode("-", $this->paattyminen);
+        if (count($pieces) < 0) {
+            $errors[] = 'Syötä päivämäärä muodossa YYYY-MM-DD';
+        }
+        if ($pieces[0] < 2000 || $pieces[0] > 3000 || $pieces[1] < 0 || $pieces[1] > 12 || $pieces[2] < 0 || $pieces[2] > 31) {
+            $errors[] = 'Syötä päivämäärä muodossa YYYY-MM-DD';
+        }
         
         return $errors;
     }
@@ -229,5 +236,18 @@ class Kysely extends BaseModel{
         $query = DB::connection()->prepare('INSERT INTO KURSSIN_KYSELY (kurssi, kysely, paattyminen)
                  VALUES (:kurssi, :kysely, :paattyminen)');
         $query->execute(array('kurssi' => $kurssin_tunniste, 'kysely' => $this->kyselyn_nimi, 'paattyminen' => $this->paattyminen));
+    }
+    
+        
+    public static function hae_nimella($nimi) {
+        $query = DB::connection()->prepare('SELECT * FROM KYSELY WHERE NIMI = :nimi');
+        $query->execute(array('nimi' => $nimi));
+        $params = $query->fetch();
+        $kysely = new Kysely(array(
+            'kyselyn_nimi' => $params['nimi'],
+            'tarkoitus' => $params['tarkoitus']
+        ));
+        
+        return $kysely;
     }
 }

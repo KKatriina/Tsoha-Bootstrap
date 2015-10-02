@@ -1,7 +1,7 @@
 <?php
 
 class Kurssi extends BaseModel{
-    public $tunniste, $nimi, $aika, $tyyppi, $kuvaus, $opettaja;
+    public $tunniste, $nimi, $aika, $tyyppi, $kuvaus, $opettaja, $laitos;
     
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -10,7 +10,7 @@ class Kurssi extends BaseModel{
     }
     
     public static function all(){
-        $query = DB::connection()->prepare('SELECT * FROM kurssi');
+        $query = DB::connection()->prepare('SELECT tunniste, kurssi.nimi, aika, tyyppi, kuvaus, opettaja, laitos FROM kurssi, opettaja where kurssi.opettaja = opettaja.nimi');
         $query->execute();
         $rows = $query->fetchAll();
         $kurssit = array();
@@ -22,7 +22,8 @@ class Kurssi extends BaseModel{
                'aika' => $row['aika'],
                'tyyppi' => $row['tyyppi'],
                'kuvaus' => $row['kuvaus'],
-               'opettaja' => $row['opettaja']
+               'opettaja' => $row['opettaja'],
+               'laitos' => $row['laitos']
             ));
         }
         
@@ -30,7 +31,9 @@ class Kurssi extends BaseModel{
     }
     
     public static function omat_kurssit($nimi){
-        $query = DB::connection()->prepare('SELECT * FROM kurssi where opettaja = :opettaja');
+        $query = DB::connection()->prepare('SELECT tunniste, kurssi.nimi, aika, tyyppi, kuvaus, opettaja, laitos
+                FROM kurssi, opettaja where kurssi.opettaja = opettaja.nimi
+                AND opettaja = :opettaja');
         $query->execute(array('opettaja' => $nimi));
         $rows = $query->fetchAll();
         $kurssit = array();
@@ -42,7 +45,8 @@ class Kurssi extends BaseModel{
                'aika' => $row['aika'],
                'tyyppi' => $row['tyyppi'],
                'kuvaus' => $row['kuvaus'],
-               'opettaja' => $row['opettaja']
+               'opettaja' => $row['opettaja'],
+               'laitos' => $row['laitos']
             ));
         }
         
@@ -50,7 +54,8 @@ class Kurssi extends BaseModel{
     }
     
     public static function find($tunniste){
-        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE tunniste = :tunniste LIMIT 1');
+        $query = DB::connection()->prepare('SELECT tunniste, kurssi.nimi, aika, tyyppi, kuvaus, opettaja, laitos FROM kurssi, opettaja
+                where kurssi.opettaja = opettaja.nimi and tunniste = :tunniste LIMIT 1');
         $query->execute(array('tunniste' => $tunniste));
         $row = $query->fetch();
         
@@ -61,7 +66,8 @@ class Kurssi extends BaseModel{
                 'aika' => $row['aika'],
                 'tyyppi' => $row['tyyppi'],
                 'kuvaus' => $row['kuvaus'],
-                'opettaja' => $row['opettaja']
+                'opettaja' => $row['opettaja'],
+                'laitos' => $row['laitos']
             ));
             
             return $kurssi;

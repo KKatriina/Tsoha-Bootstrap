@@ -87,12 +87,48 @@ class KurssiController extends BaseController{
         } else {
             $kurssi->update($tunniste);
             
-            
- 
             Redirect::to('/kurssit', array('message' => 'Kurssia on muokattu onnistuneesti!'));
         }
     }
     
+    public static function lisaa_kysely($tunniste) {
+        self::check_logged_in();
+        $kurssi = Kurssi::find($tunniste);
+        $kyselyt = Kysely::keraa_tiedot_lisayslomakkeeseen();
+        View::make('/kurssit/lisaysvaihtoehdot.html', array('kurssi' => $kurssi, 'kyselyt' => $kyselyt));
+    }
+    
+    public static function nayta_taydennyslomake($tunniste, $nimi) {
+        self::check_logged_in();
+        View::make('/kurssit/taydenna.html', array('tunniste' => $tunniste, 'nimi' => $nimi));
+    }
+    
+    public static function liita_kysely_kurssiin($tunniste, $nimi) {
+        self::check_logged_in();
+        
+        $params = $_POST;
+        
+        $kysely1 = Kysely::hae_nimella($nimi);
+        $kurssi = Kurssi::find($tunniste);
+        
+        $kysely = new Kysely(array(
+            'kurssi' => $kurssi->nimi,
+            'aika' => $kurssi->aika,
+            'kyselyn_nimi' => $kysely1->kyselyn_nimi,
+            'paattyminen' => $params['paattyminen'],
+            'tarkoitus' => $kysely1->tarkoitus
+        ));
+        
+
+        $errors = $kysely->validate_paattyminen();
+        
+        if(count($errors) == 0) {
+            $kysely->liita_kurssiin();
+            Redirect::to('/kurssit', array('message' => 'Kysely lisätty onnistuneesti!'));
+        } else {
+            View::make('kurssit/taydenna.html', array('errors' => $errors, 'tunniste' => $kurssi->tunniste, 'nimi' => $kysely->kyselyn_nimi));
+        }
+    }
     
 }
 

@@ -50,17 +50,26 @@
   KyselyController::taydenna();
   });
   
+  
+  /*
   $routes->get('/kyselyt/taydenna', function() {
   KyselyController::nayta_taydennyslomake();
-  });
+  });*/
   
-  $routes->post('/kyselyt/taydennetty', function() {
-  KyselyController::liita_kysely_kurssiin();
-  });
   
   $routes->get('/kyselyt/:tunniste', function($tunniste) {
   KyselyController::show($tunniste);
   });
+  
+  $routes->post('/kyselyt/:nimi/taydenna', function($nimi) {
+  KyselyController::nayta_taydennyslomake($nimi);
+  });
+  
+
+  $routes->post('/kyselyt/:nimi/taydennetty', function($nimi) {
+  KyselyController::liita_kysely_kurssiin($nimi);
+  });
+  
   
   $routes->get('/kyselyt/:tunniste/lisaa_kysymys', function($tunniste) {
   KyselyController::lisaa_kysymys($tunniste);
@@ -117,6 +126,18 @@
   
   $routes->get('/kurssit/:tunniste/kyselyt', function($tunniste) {
   KyselyController::kurssin_kyselyt($tunniste);
+  });
+  
+  $routes->get('/kurssit/:tunniste/lisaysvaihtoehdot', function($tunniste) {
+  KurssiController::lisaa_kysely($tunniste);
+  });
+  
+  $routes->post('/kurssit/:tunniste/:nimi/taydenna', function($tunniste, $nimi) {
+  KurssiController::nayta_taydennyslomake($tunniste, $nimi);
+  });
+  
+  $routes->post('/kurssit/:tunniste/:nimi/taydennetty', function($tunniste, $nimi) {
+  KurssiController::liita_kysely_kurssiin($tunniste, $nimi);
   });
   
   //käyttäjään liittyviä reittejä

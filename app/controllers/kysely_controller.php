@@ -79,6 +79,7 @@ class KyselyController extends BaseController{
         $kysely = Kysely::find($tunniste);
         View::make('kyselyt/edit.html', array('kysely' => $kysely));
     }
+
     
     public static function update($tunniste) {
         self::check_logged_in();
@@ -90,10 +91,15 @@ class KyselyController extends BaseController{
         );
         
         $kysely = new Kysely($attributes);
-
-        $kysely->update($tunniste);    
- 
-        Redirect::to('/kyselyt', array('message' => 'Kyselyä on muokattu onnistuneesti!'));  
+        
+        $errors = $kysely->validate_paattyminen();
+        
+        if(count($errors) == 0) {
+            $kysely->update($tunniste);     
+            Redirect::to('/kyselyt', array('message' => 'Kyselyä on muokattu onnistuneesti!'));
+        } else {
+            View::make('kyselyt/edit.html', array('errors' => $errors, 'kysely' => $kysely));
+        }
     }
     
     public static function destroy($tunniste) {
@@ -117,21 +123,26 @@ class KyselyController extends BaseController{
         Redirect::to('/kyselyt/taydenna', array('kysely' => $kysely));
     }
     
-    public static function nayta_taydennyslomake() {
+    public static function nayta_taydennyslomake($nimi) {
         self::check_logged_in();
         
-        View::make('kyselyt/taydenna.html');
+        $kysely = Kysely::hae_nimella($nimi);
+        
+        View::make('kyselyt/taydenna.html', array('kysely' => $kysely));
     }
     
-    public static function liita_kysely_kurssiin() {
+    public static function liita_kysely_kurssiin($nimi) {
         self::check_logged_in();
         $params = $_POST;
+        
+        $kysely1 = Kysely::hae_nimella($nimi);
+        
         $kysely = new Kysely(array(
             'kurssi' => $params['kurssi'],
             'aika' => $params['aika'],
-            'kyselyn_nimi' => $params['kyselyn_nimi'],
+            'kyselyn_nimi' => $kysely1->kyselyn_nimi,
             'paattyminen' => $params['paattyminen'],
-            'tarkoitus' => $params['tarkoitus']
+            'tarkoitus' => $kysely1->tarkoitus
         ));
         
         $errors1 = $kysely->validate_kurssi_ja_aika();
@@ -140,7 +151,7 @@ class KyselyController extends BaseController{
         
         if(count($errors) == 0) {
             $kysely->liita_kurssiin();
-            Redirect::to('/kyselyt', array('message' => 'Kysely lisätty onnistuneesti!'));
+            Redirect::to('/kurssit', array('message' => 'Kysely lisätty onnistuneesti!'));
         } else {
             View::make('kyselyt/taydenna.html', array('errors' => $errors, 'kysely' => $kysely));
         }

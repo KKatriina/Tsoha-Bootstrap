@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Lisäysvaihtoehdot</h1>
+<h1>Lisää kysely kurssille {{kurssi.nimi}}</h1>
 
 
-Voit joko luoda kokonaan uuden kyselyn kurssille tai käyttää valmista kyselypohjaa.
+Voit joko luoda kokonaan uuden kyselyn kurssillesi tai käyttää valmista kyselypohjaa.
 
 
 
@@ -37,7 +37,7 @@ Voit joko luoda kokonaan uuden kyselyn kurssille tai käyttää valmista kyselyp
                 {% endfor %}
                     </td>
                 <td>
-                     <form method="post" action="{{base_path}}/kyselyt/{{kysely.kyselyn_nimi}}/taydenna" style="display: inline-block;">
+                     <form method="post" action="{{base_path}}/kurssit/{{kurssi.tunniste}}/{{kysely.kyselyn_nimi}}/taydenna" style="display: inline-block;">
                     <button type="submit" class="btn btn-danger">Valitse</button>
                     </form>   
                     </td>
